@@ -66,7 +66,7 @@ namespace VirtualSociety.BrpServer
             _persoon.Verblijfplaats.Huisnummer = int.Parse(entity.Huisnummer);
             _persoon.Verblijfplaats.Huisnummertoevoeging = entity.Huisletter;
             _persoon.Verblijfplaats.Postcode = entity.Postcode;
-            _persoon.Verblijfplaats.Postcode = entity.Straatnaam;
+            _persoon.Verblijfplaats.Straatnaam = entity.Straatnaam;
             _persoon.Verblijfplaats.Woonplaatsnaam = entity.Woonplaats;
         }
 
