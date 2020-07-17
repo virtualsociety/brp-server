@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.6.2" />
     <PackageReference Include="VirtualSociety.FactTables" Version="0.0.1" />
   </ItemGroup>
 </Project>
