@@ -45,15 +45,28 @@ namespace VirtualSociety.BrpServer
             _persoon.Geboorte.Datum.Maand = birth.Month;
             _persoon.Geboorte.Datum.Jaar = birth.Year;
             _persoon.Geboorte.Datum.Datum = birth;
+            _persoon.Geboorte.InOnderzoek = new GeboorteInOnderzoek();
+            _persoon.Geboorte.InOnderzoek.DatumIngangOnderzoek = new Datum_onvolledig();
             _persoon.Geboorte.Land = new Waardetabel();
+            _persoon.Geboorte.Plaats = new Waardetabel() { Code = "0000", Omschrijving = "Placeholder" };
             _persoon.Geboorte.Land.Omschrijving = "Nederland";
             _persoon.Geboorte.Land.Code = "6030";
             _persoon.Nationaliteit = new System.Collections.Generic.List<Nationaliteit>();
             _persoon.Nationaliteit.Add(new Nationaliteit()
             {
+                RedenOpname = new Waardetabel() { Code = "0000", Omschrijving = "Placeholder" },
                 DatumIngangGeldigheid = _persoon.Geboorte.Datum,
-                Nationaliteit1 = new Waardetabel() { Code = "0001", Omschrijving = "Nederlandse" }
+                Nationaliteit1 = new Waardetabel() { Code = "0001", Omschrijving = "Nederlandse" },
+                InOnderzoek = new NationaliteitInOnderzoek()
+                {
+                    DatumIngangOnderzoek = new Datum_onvolledig()
+                }
+
             });
+            _persoon.InOnderzoek = new PersoonInOnderzoek();
+            _persoon.InOnderzoek.DatumIngangOnderzoek = new Datum_onvolledig();
+            _persoon.Naam.InOnderzoek = new NaamInOnderzoek();
+            _persoon.Naam.InOnderzoek.DatumIngangOnderzoek = new Datum_onvolledig();
             _persoon.DatumEersteInschrijvingGBA = _persoon.Geboorte.Datum;
             return _persoon;
         }
@@ -68,6 +81,44 @@ namespace VirtualSociety.BrpServer
             _persoon.Verblijfplaats.Postcode = entity.Postcode;
             _persoon.Verblijfplaats.Straatnaam = entity.Straatnaam;
             _persoon.Verblijfplaats.Woonplaatsnaam = entity.Woonplaats;
+            _persoon.Verblijfplaats.IdentificatiecodeAdresseerbaarObject = string.Empty;
+            _persoon.Verblijfplaats.Locatiebeschrijving = string.Empty;
+            _persoon.Verblijfplaats.DatumAanvangAdreshouding = new Datum_onvolledig();  
+            _persoon.Verblijfplaats.DatumIngangGeldigheid = new Datum_onvolledig();
+            _persoon.Verblijfplaats.DatumInschrijvingInGemeente = new Datum_onvolledig();
+            _persoon.Verblijfplaats.DatumVestigingInNederland = new Datum_onvolledig();
+            _persoon.Verblijfplaats.GemeenteVanInschrijving = new Waardetabel() { Code = "0000", Omschrijving = "Place  holder" };
+            _persoon.Verblijfplaats.LandVanwaarIngeschreven = new Waardetabel() { Code = "0000", Omschrijving = "Place  holder" };
+            _persoon.Verblijfplaats.Locatiebeschrijving = string.Empty;
+            _persoon.Verblijfplaats.NaamOpenbareRuimte = string.Empty;
+            _persoon.Verblijfplaats.VerblijfBuitenland = new VerblijfBuitenland() { AdresRegel1="",AdresRegel2="",AdresRegel3="", Land = new Waardetabel() { Code = "0000", Omschrijving = "Place  holder" } };
+            _persoon.Verblijfplaats.InOnderzoek = new VerblijfplaatsInOnderzoek() { DatumIngangOnderzoek = new Datum_onvolledig()};
+            _persoon.Verblijfplaats.Huisnummertoevoeging = string.Empty;
+            _persoon.Verblijfplaats.IdentificatiecodeNummeraanduiding = string.Empty;
+            _persoon._links = new IngeschrevenPersoon_links();
+            _persoon._links.Self = new HalLink();
+            _persoon._links.Self.Href = string.Empty;
+            _persoon._links.Self.Title = string.Empty;
+            _persoon._links.Ouders = new System.Collections.Generic.List<HalLink>();
+            _persoon._links.Reisdocumenten = new System.Collections.Generic.List<HalLink>();
+            _persoon._links.Kinderen = new System.Collections.Generic.List<HalLink>();
+            _persoon._links.Partners = new System.Collections.Generic.List<HalLink>();
+            _persoon._links.Partnerhistorie = new HalLink() { Href = string.Empty, Title = string.Empty };
+            _persoon._links.Verblijfplaatshistorie = new HalLink() { Href = string.Empty, Title = string.Empty }; 
+            _persoon._links.Verblijfstitelhistorie = new HalLink() { Href = string.Empty, Title = string.Empty };
+            _persoon._links.NationaliteitHistorie = new HalLink() { Href = string.Empty, Title = string.Empty };
+            _persoon._links.VerblijfplaatsNummeraanduiding = new HalLink() { Href = string.Empty, Title = string.Empty };
+            _persoon._embedded = new IngeschrevenPersoon_embedded();
+            _persoon._embedded.Kinderen = new System.Collections.Generic.List<KindHal>();
+            _persoon._embedded.Ouders = new System.Collections.Generic.List<OuderHal>();
+            _persoon._embedded.Partners = new System.Collections.Generic.List<PartnerHal>();
+            _persoon.Kiesrecht = new Kiesrecht() { EinddatumUitsluitingEuropeesKiesrecht = new Datum_onvolledig(), EinddatumUitsluitingKiesrecht=new Datum_onvolledig() };
+            _persoon.OpschortingBijhouding = new OpschortingBijhouding() { Datum = new Datum_onvolledig() };
+            _persoon.Overlijden = new Overlijden() { Datum = new Datum_onvolledig(), Plaats= new Waardetabel() { Code = "0000", Omschrijving = "Place  holder" },  Land= new Waardetabel() { Code = "0000", Omschrijving = "Place  holder" }, InOnderzoek = new OverlijdenInOnderzoek() { DatumIngangOnderzoek = new Datum_onvolledig() } };
+            _persoon.Gezagsverhouding = new Gezagsverhouding() { InOnderzoek = new GezagsverhoudingInOnderzoek() { DatumIngangOnderzoek = new Datum_onvolledig() } };
+            _persoon.Verblijfstitel = new Verblijfstitel() { Aanduiding = new Waardetabel() { Code = "0000", Omschrijving = "Place  holder" },  DatumIngang = new Datum_onvolledig(), DatumEinde = new Datum_onvolledig(), InOnderzoek = new VerblijfstitelInOnderzoek() { DatumIngangOnderzoek = new Datum_onvolledig() } };
+            _persoon.Reisdocumenten = new System.Collections.Generic.List<string>();
+
         }
 
         private void SetRandomFirstName()
@@ -76,6 +127,8 @@ namespace VirtualSociety.BrpServer
                 from p in Voornamen_Entity.Entities select p)
                 .Skip(_r.Next(Voornamen_Entity.Entities.Count)).FirstOrDefault();
             var parts = entity.Voornaam.Split(' ');
+            _persoon.Naam.GebruikInLopendeTekst = string.Empty;
+            _persoon.Naam.Voorvoegsel = string.Empty;
             _persoon.Naam.Voornamen = parts[0];
             _persoon.Naam.Voorletters = parts[0][0].ToString();
             switch (parts[1])
