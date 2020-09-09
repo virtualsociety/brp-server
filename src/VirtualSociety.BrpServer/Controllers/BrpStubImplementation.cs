@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Brp.Api;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,7 +31,8 @@ namespace Brp.Api.Controllers
 
         public Task<IngeschrevenPersoonHalCollectie> IngeschrevenNatuurlijkPersonenAsync(string expand, string fields, IEnumerable<string> burgerservicenummer, DateTimeOffset? geboorte__datum, string geboorte__plaats, Geslacht_enum? geslachtsaanduiding, bool? inclusiefoverledenpersonen, string naam__geslachtsnaam, string naam__voornamen, string verblijfplaats__gemeentevaninschrijving, string verblijfplaats__huisletter, int? verblijfplaats__huisnummer, string verblijfplaats__huisnummertoevoeging, string verblijfplaats__identificatiecodenummeraanduiding, string verblijfplaats__naamopenbareruimte, string verblijfplaats__postcode, string naam__voorvoegsel)
         {
-            throw new NotImplementedException();
+            return null;
+           // throw new NotImplementedException();
         }
 
         public async Task<IngeschrevenPersoonHal> IngeschrevenNatuurlijkPersoonAsync(string burgerservicenummer, string expand, string fields)
