@@ -45,7 +45,13 @@ namespace Brp.Api.Controllers
 
         public Task<KindHalCollectie> IngeschrevenpersonenBurgerservicenummerkinderenAsync(string burgerservicenummer)
         {
-            throw new NotImplementedException();
+            var ret = new IngeschrevenPersoonHal();
+            var persoon = new FakeIngeschrevenPersoon(burgerservicenummer, ret);
+            var kinderen = persoon.CreateKinderen();
+            KindHalCollectie collection = new KindHalCollectie();
+            collection._embedded = new KindHalCollectie__embedded();
+            collection._embedded.Kinderen = kinderen;
+            return Task.FromResult(collection);
         }
 
         public Task<KindHal> IngeschrevenpersonenBurgerservicenummerkinderenIdAsync(string burgerservicenummer, string id)

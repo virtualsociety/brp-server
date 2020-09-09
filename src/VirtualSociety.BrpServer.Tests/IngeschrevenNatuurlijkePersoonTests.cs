@@ -9,8 +9,9 @@ namespace Brp.Api.Tests
         public async void Test1()
         {
             BrpStubImplementation stub = new BrpStubImplementation();
-            var persoon = await stub.IngeschrevenNatuurlijkPersoonAsync("293423805", null, null);
-            Assert.Equal("293423805", persoon.Burgerservicenummer);
+            var persoon = await stub.IngeschrevenNatuurlijkPersoonAsync("293423802", null, null);
+            var kinderen = await stub.IngeschrevenpersonenBurgerservicenummerkinderenAsync("293423802");
+            Assert.Equal("293423802", persoon.Burgerservicenummer);
 
 
         }

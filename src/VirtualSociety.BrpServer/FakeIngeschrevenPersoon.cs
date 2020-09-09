@@ -1,5 +1,6 @@
 ﻿using Brp.Api;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Vs.FactTables;
 
@@ -10,6 +11,7 @@ namespace VirtualSociety.BrpServer
         private int _seed;
         private IngeschrevenPersoonHal _persoon;
         private Random _r;
+        private int _maxKinderen = 6;
 
         static FakeIngeschrevenPersoon()
         {
@@ -27,6 +29,67 @@ namespace VirtualSociety.BrpServer
             _persoon.Naam = new NaamPersoon();
         }
 
+        public List<KindHal> CreateKinderen()
+        {
+            // _r is reset on purpose
+            _r = new Random(_seed);
+            var collection = new List<KindHal>();
+            for (int i = 0; i < _r.Next(0,_maxKinderen);i++)
+            {
+                var kind = new KindHal();
+                kind.Burgerservicenummer = CreateBsn();
+                kind.Geboorte = new Geboorte();
+                kind.Geboorte.Datum = GetDatumOnvolledig(18);
+                kind.Geboorte.Land = GetLand();
+                kind.Geboorte.Plaats = GetPlaats();
+                collection.Add(kind);
+            }
+            return collection;
+        }
+
+        private Datum_onvolledig GetDatumOnvolledig(int maxAge)
+        {
+            Datum_onvolledig datum = new Datum_onvolledig();
+            DateTime birth = new DateTime(2020, 1, 1).AddDays(-_r.Next(18 * 365));
+            datum.Dag = birth.Day;
+            datum.Maand = birth.Month;
+            datum.Jaar = birth.Year;
+            datum.Datum = birth;
+            return datum;
+        }
+
+        private Waardetabel GetLand()
+        {
+            var waardetabel = new Waardetabel();
+            waardetabel.Omschrijving = "Nederland";
+            waardetabel.Code = "6030";
+            return waardetabel;
+        }
+
+        private Waardetabel GetPlaats()
+        {
+            var waardetabel = new Waardetabel() { Code = "0000", Omschrijving = "Placeholder" };
+            return waardetabel;
+        }
+
+
+        private string CreateBsn()
+        {
+            int rest; string bsn;
+            do
+            {
+                bsn = ""; int total = 0; for (int i = 0; i < 8; i++)
+                {
+                    int rndDigit = _r.Next(0, i == 0 ? 2 : 9);
+                    total += rndDigit * (9 - i);
+                    bsn += rndDigit;
+                }
+                rest = total % 11;
+            }
+            while (rest > 9);
+            return bsn + rest;
+        }
+
         public IngeschrevenPersoonHal CreateFakePersoon()
         {
             // _r is reset on purpose.
@@ -36,6 +99,10 @@ namespace VirtualSociety.BrpServer
             SetRandomFirstName();
             _r = new Random(_seed);
             SetRandomLastName();
+            _r = new Random(_seed);
+            SetKinderenLinks();
+            _r = new Random(_seed);
+            SetPartnerLinks();
             _r = new Random(_seed);
             _persoon.Naam.Aanschrijfwijze = $"{_persoon.Naam.Aanhef} {_persoon.Naam.Voorletters}. {_persoon.Naam.Geslachtsnaam}";
             _persoon.Geboorte = new Geboorte();
@@ -69,6 +136,30 @@ namespace VirtualSociety.BrpServer
             _persoon.Naam.InOnderzoek.DatumIngangOnderzoek = new Datum_onvolledig();
             _persoon.DatumEersteInschrijvingGBA = _persoon.Geboorte.Datum;
             return _persoon;
+        }
+
+        private void SetKinderenLinks()
+        {
+            var kinderen = _r.Next(0, _maxKinderen);
+            if (kinderen == 0)
+                    return;
+            _persoon._links.Kinderen = new System.Collections.Generic.List<HalLink>();
+            for (int i = 0; i < kinderen; i++)
+            {
+                _persoon._links.Kinderen.Add(new HalLink() { Href = $"https://placeholder-uri/ingeschrevenpersonen/{_persoon.Burgerservicenummer}/kinderen/" + i });
+            }
+        }
+
+        private void SetPartnerLinks()
+        {
+            var partners = _r.Next(0, 1);
+            if (partners == 0)
+                return;
+            _persoon._links.Partners = new System.Collections.Generic.List<HalLink>();
+            for (int i = 0; i < partners; i++)
+            {
+                _persoon._links.Kinderen.Add(new HalLink() { Href = $"https://placeholder-uri/ingeschrevenpersonen/{_persoon.Burgerservicenummer}/partners/" + i });
+            }
         }
 
         private void SetRandomAddress()
