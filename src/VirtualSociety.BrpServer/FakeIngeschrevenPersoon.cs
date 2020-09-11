@@ -146,7 +146,7 @@ namespace VirtualSociety.BrpServer
             _persoon._links.Kinderen = new System.Collections.Generic.List<HalLink>();
             for (int i = 0; i < kinderen; i++)
             {
-                _persoon._links.Kinderen.Add(new HalLink() { Href = $"https://placeholder-uri/ingeschrevenpersonen/{_persoon.Burgerservicenummer}/kinderen/" + i });
+                _persoon._links.Kinderen.Add(new HalLink() { Title = string.Empty, Href = $"https://placeholder-uri/ingeschrevenpersonen/{_persoon.Burgerservicenummer}/kinderen/" + i });
             }
         }
 
@@ -158,7 +158,7 @@ namespace VirtualSociety.BrpServer
             _persoon._links.Partners = new System.Collections.Generic.List<HalLink>();
             for (int i = 0; i < partners; i++)
             {
-                _persoon._links.Kinderen.Add(new HalLink() { Href = $"https://placeholder-uri/ingeschrevenpersonen/{_persoon.Burgerservicenummer}/partners/" + i });
+                _persoon._links.Kinderen.Add(new HalLink() {Title = string.Empty, Href = $"https://placeholder-uri/ingeschrevenpersonen/{_persoon.Burgerservicenummer}/partners/" + i });
             }
         }
 
